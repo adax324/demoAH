@@ -8,6 +8,7 @@ import com.example.demoah.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -31,5 +32,18 @@ public class StudentTeacherManager {
 
         student.get().addTeacher(teacher.get());
         studentDAO.update(student.get());
+    }
+
+    public void unassignTeacher(Long teacherId) {
+        Teacher teacher = teacherDAO.get(teacherId).get();
+        List<Student> student = studentDAO.listByTeacher(teacherId);
+        student.forEach(item -> {
+            if (item.getTeachers().contains(teacher)) {
+                item.removeTeacher(teacher);
+                teacher.removeStudent(item);
+                studentDAO.update(item);
+            }
+        });
+        teacherDAO.update(teacher);
     }
 }

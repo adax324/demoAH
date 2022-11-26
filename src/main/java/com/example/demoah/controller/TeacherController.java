@@ -52,7 +52,7 @@ public class TeacherController {
         List<Criterion> criterionList = new ArrayList<>();
         if (request.getParameter("firstName") != null)
             criterionList.add(Restrictions.eq("firstName", firstName));
-        if (request.getParameter("lastname") != null)
+        if (request.getParameter("lastName") != null)
             criterionList.add(Restrictions.eq("lastName", lastName));
         return ResponseEntity.ok(teacherManager.listByCriteria(criterionList.toArray(new Criterion[0])));
     }

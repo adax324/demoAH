@@ -13,6 +13,7 @@ import java.util.Map;
 public class TeacherManager extends AbstractManager<Teacher, TeacherDTO, Long> {
     @Autowired
     private StudentTeacherManager studentTeacherManager;
+
     public TeacherDTO assignToStudent(Long teacherId, Long studentId) {
         studentTeacherManager.assign(studentId, teacherId);
         return get(teacherId);
@@ -21,4 +22,18 @@ public class TeacherManager extends AbstractManager<Teacher, TeacherDTO, Long> {
     public List<TeacherDTO> getByStudent(Long studentId) {
         return listByCriteria(Map.of("students", "students"), null, null, Restrictions.eq("students.id", studentId));
     }
+
+    @Override
+    public void delete(Long id) {
+        studentTeacherManager.unassignTeacher(id);
+        super.delete(id);
+    }
+
+    @Override
+    public void delete(String uuid) {
+        studentTeacherManager.unassignTeacher(get(uuid).getId());
+        super.delete(uuid);
+    }
+
+
 }

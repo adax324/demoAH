@@ -96,4 +96,8 @@ public class Teacher extends AbstractEntity<Long> implements AbstractEntityInter
     public void addStudent(Student student) {
         this.students.add(student);
     }
+
+    public void removeStudent(Student student) {
+        this.students.remove(student);
+    }
 }
