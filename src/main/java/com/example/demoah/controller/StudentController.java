@@ -46,7 +46,7 @@ public class StudentController {
 
     @GetMapping("/getByTeacher")
     public ResponseEntity<List<StudentDTO>> getByTeacher(@RequestParam Long teacherId) {
-        return ResponseEntity.ok(studentManager.getByTeacher(teacherId));
+        return ResponseEntity.ok(studentManager.listByTeacher(teacherId));
     }
 
     @GetMapping("/listByParams")

@@ -46,4 +46,18 @@ public class StudentTeacherManager {
         });
         teacherDAO.update(teacher);
     }
+
+    public void unassignStudent(Long studentId) {
+        List<Teacher> teacher = teacherDAO.listByStudent(studentId);
+        Student student = studentDAO.get(studentId).get();
+        teacher.forEach(item -> {
+            if (item.getStudents().contains(student)) {
+                student.removeTeacher(item);
+                item.removeStudent(student);
+                teacherDAO.update(item);
+            }
+        });
+
+        studentDAO.update(student);
+    }
 }
